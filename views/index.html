@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en" ng-app>
+
+<head>
+  <title>User Database</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/css/bootstrap-responsive.min.css">
+  <style>
+    body {
+      padding-top: 60px;
+      padding-bottom: 60px;
+    }
+    
+    table,
+    th,
+    td {
+      border-collapse: collapse;
+      border: 1px solid black;
+      text-align: center;
+    }
+  </style>
+  <script src="/js/jquery.min.js"></script>
+  <script src="/js/bootstrap.min.js"></script>
+  <script>
+    function load() {
+      $.ajax({
+        url: "/get/html",
+        cache: false,
+        success: function(html) {
+          $("#results").append(html);
+        }
+      });
+    };
+   
+    $(document).ready(function() {
+      load();
+    }); 
+      
+    function validateForm() {
+    var x = document.forms["newRecord"]["personid"].value;
+    var y = document.forms["newRecord"]["firstname"].value;
+    var z = document.forms["newRecord"]["lastname"].value;
+    var w = document.forms["newRecord"]["country"].value;
+    var v = document.forms["newRecord"]["address"].value;
+    var c = document.forms["newRecord"]["phoneno"].value;
+   
+    if (x == "" || isNaN(x) || x.toString().length < 10) {
+        alert("Person id empty, not numeric or too short.");
+        return false;
+    }
+    else if ( x.toString().length < 10) {
+        alert("Person Id has to be minimal 10 digits log.");
+        return false;
+    }
+    else if (y == "" || !isNaN(y) || z == "" || !isNaN(z)) {
+        alert("Name empty or is numeric.");
+        return false;
+    }
+    else if (w == "" || !isNaN(w)) {
+        alert("Country empty or is numeric.");
+        return false;
+    }
+    else if (v == "" || !isNaN(v)) {
+        alert("Address empty or is numeric.");
+        return false;
+    }
+    else if (c == "" || isNaN(c)) {
+        alert("Phone no empty or is not numeric.");
+        return false;
+    }
+    
+    }
+    
+  function validateDelForm(){
+    var x = document.forms["deleteRecord"]["personid"].value;
+    if(x == "" || isNaN(x)){
+        alert("Person id empty or not a number");
+        return false;
+    }
+    
+  }
+    
+  </script>
+</head>
+
+<body>
+  <div class="container">
+    <div class="navbar navbar-fixed-top navbar-inverse">
+      <div class="navbar-inner">
+      </div>
+    </div>
+    <div class="page-header">
+      <h1>User database</h1>
+    </div>
+    <div class="row">
+      <div id="results" class="span8">
+      </div>
+      <div class="span4">
+        <ul class="nav nav-list well">
+          <li>
+            <form name="newRecord" enctype='application/json' onsubmit="return validateForm()" action="/post/json" method="post">
+              <div class="field">
+                <input type="text" name="personid" placeholder="Person Id">
+              </div>
+              <div class="field">
+                <input type="text" name="firstname" placeholder="First name">
+              </div>
+              <div class="field">
+                <input type="text" name="lastname" placeholder="Last name">
+              </div>
+              <div class="field">
+                <input type="text" name="country" placeholder="Country">
+              </div>
+              <div class="field">
+                <input type="text" name="address" placeholder="Street address">
+              </div>
+               <div class="field">
+                <input type="text" name="phoneno" placeholder="Phone no">
+              </div>
+              <div class="field">
+                <button type="submit">Submit</button>
+              </div>
+            </form>
+          </li>
+        </ul>
+      </div>
+    <div class="span4">
+      <ul class="nav nav-list well">
+        <li>
+         <form name="deleteRecord" enctype='application/json' onsubmit="return validateDelForm()" action="/delete/json" method="post">
+            <div class="field">
+                <input type="text" name="personid" placeholder="Person Id">
+            </div>
+              <div class="field">
+                <button type="submit">Delete</button>
+              </div>
+          </form>
+        </li>
+      </ul>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>
