@@ -20,17 +20,17 @@
 			<body>
 				<table>
 					<tr>
-						<th>Person ID</th>
+						<th>Student ID</th>
 						<th>First name</th>
 						<th>Last name</th>
-						<th>Country</th>
+						<th>Course</th>
 						<th>Address</th>
-						<th>Phone no.</th>
+						<th>Grade</th>
 					</tr>
 					<xsl:for-each select="persons/person">
 							<tr>
 								<td>
-									<xsl:value-of select="personid"/>
+									<xsl:value-of select="studentid"/>
 								</td>
 								<td>
 									<xsl:value-of select="firstname"/>
@@ -40,13 +40,13 @@
 									<xsl:value-of select="lastname"/>
 								</td>
 							<td>
-								<xsl:value-of select="country"/>	
+								<xsl:value-of select="course"/>	
 							</td>
 							<td>
 								<xsl:value-of select="address"/>	
 								</td>
 							<td>
-								<xsl:value-of select="phoneno"/>	
+								<xsl:value-of select="grade"/>	
 							</td>
 						</tr>
 					</xsl:for-each>
