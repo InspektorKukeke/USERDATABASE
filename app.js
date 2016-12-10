@@ -1,3 +1,4 @@
+//-- Mos of this code is borrowed from https://github.com/mikhail-nci/wad-simple-demo with some changes where needed
 var http = require('http'),
     path = require('path'),
     express = require('express'),
@@ -5,6 +6,7 @@ var http = require('http'),
     fs = require('fs'),
     js2xmlparser = require('js2xmlparser'),
     libxslt = require('libxslt');
+
 
 var router = express();
 var server = http.createServer(router);
@@ -86,10 +88,10 @@ router.post('/delete/json', function(req, res) {
     
   //  JSONparsed.person.splice(JSONparsed.person.length-1, 1);
     
-  //Removing a record from parsed json file using splice() 
+  //Removing a record from parsed json file using splice() - Siim
   var index = -1; 
     for(var i = 0; i != JSONparsed.person.length; i++){
-      if(JSONparsed.person[i].personid === obj.personid){
+      if(JSONparsed.person[i].studentid === obj.studentid){
         index = i;
       }
    }
@@ -117,6 +119,8 @@ router.post('/delete/json', function(req, res) {
   res.redirect('back');
 
 });
+
+
 
 server.listen(process.env.PORT || 3000, process.env.IP || "0.0.0.0", function() {
   var addr = server.address();

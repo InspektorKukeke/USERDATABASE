@@ -1,8 +1,8 @@
 <!doctype html>
 <html lang="en" ng-app>
-
+<!-- most of this code is borrowed from Mikhails project with some changes where needed  https://github.com/mikhail-nci/wad-simple-demo-->
 <head>
-  <title>User Database</title>
+  <title>College Database</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="/css/bootstrap.min.css">
   <link rel="stylesheet" href="/css/bootstrap-responsive.min.css">
@@ -23,6 +23,10 @@
   </style>
   <script src="/js/jquery.min.js"></script>
   <script src="/js/bootstrap.min.js"></script>
+  <script src="/node_modules/jquery/dist/jquery.js"></script>
+  <script src="node_modules/es6-promise/es6-promise.auto.min.js"></script> <!-- for IE support -->
+  <script src="node_modules/sweetalert/dist/sweetalert.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="node_modules/sweetalert/dist/sweetalert.min.css">
   <script>
     function load() {
       $.ajax({
@@ -37,21 +41,21 @@
     $(document).ready(function() {
       load();
     }); 
-      
+    //Validation function is coded by the team.
     function validateForm() {
-    var x = document.forms["newRecord"]["personid"].value;
+    var x = document.forms["newRecord"]["studentid"].value;
     var y = document.forms["newRecord"]["firstname"].value;
     var z = document.forms["newRecord"]["lastname"].value;
-    var w = document.forms["newRecord"]["country"].value;
+    var w = document.forms["newRecord"]["course"].value;
     var v = document.forms["newRecord"]["address"].value;
-    var c = document.forms["newRecord"]["phoneno"].value;
+    var c = document.forms["newRecord"]["grade"].value;
    
     if (x == "" || isNaN(x) || x.toString().length < 10) {
-        alert("Person id empty, not numeric or too short.");
+        alert("Student id empty, not numeric or too short.")
         return false;
     }
     else if ( x.toString().length < 10) {
-        alert("Person Id has to be minimal 10 digits log.");
+        alert("Student Id has to be minimal 10 digits long.");
         return false;
     }
     else if (y == "" || !isNaN(y) || z == "" || !isNaN(z)) {
@@ -59,15 +63,15 @@
         return false;
     }
     else if (w == "" || !isNaN(w)) {
-        alert("Country empty or is numeric.");
+        alert("Course cannot be empty or a number.");
         return false;
     }
     else if (v == "" || !isNaN(v)) {
-        alert("Address empty or is numeric.");
+        alert("Address cannot be empty or a number.");
         return false;
     }
-    else if (c == "" || isNaN(c)) {
-        alert("Phone no empty or is not numeric.");
+    else if (c == "" || !isNaN(c)) {
+        alert("Grade cannot be empty or a number.");
         return false;
     }
     
@@ -81,7 +85,7 @@
     }
     
   }
-    
+     
   </script>
 </head>
 
@@ -92,7 +96,7 @@
       </div>
     </div>
     <div class="page-header">
-      <h1>User database</h1>
+      <h1 style{font-family: "Times New Roman", Times, serif;}>COLLEGE DATABASE</h1>
     </div>
     <div class="row">
       <div id="results" class="span8">
@@ -102,7 +106,7 @@
           <li>
             <form name="newRecord" enctype='application/json' onsubmit="return validateForm()" action="/post/json" method="post">
               <div class="field">
-                <input type="text" name="personid" placeholder="Person Id">
+                <input type="text" name="studentid" placeholder="Student Id - minimum 10 digits">
               </div>
               <div class="field">
                 <input type="text" name="firstname" placeholder="First name">
@@ -111,30 +115,41 @@
                 <input type="text" name="lastname" placeholder="Last name">
               </div>
               <div class="field">
-                <input type="text" name="country" placeholder="Country">
-              </div>
+                <select type="text" name="course" placeholder="Course">
+                 <option value="Arts">Arts</option>
+                  <option value="Science">Science</option>
+                  <option value="Computing">Computing</option>
+                  <option value="Music">Music</option>
+                  <option value="Business">Business</option>
+                </select>
+                </div>
               <div class="field">
                 <input type="text" name="address" placeholder="Street address">
               </div>
                <div class="field">
-                <input type="text" name="phoneno" placeholder="Phone no">
+               <select type="text" name="grade" placeholder="Grade">
+                 <option value="Distinction">Distinction</option>
+                  <option value="Merit">Merit</option>
+                  <option value="Pass">Pass</option>
+                  <option value="Fail">Fail</option>
+                </select>
               </div>
               <div class="field">
-                <button type="submit">Submit</button>
+                <button class="button" type="submit">Submit</button>
               </div>
             </form>
           </li>
         </ul>
-      
+        
     <div class="delForm">
       <ul class="nav nav-list well">
         <li>
          <form name="deleteRecord" enctype='application/json' onsubmit="return validateDelForm()" action="/delete/json" method="post">
             <div class="field">
-                <input type="text" name="personid" placeholder="Person Id">
+                <input type="text" name="studentid" placeholder="Student Id">
             </div>
               <div class="field">
-                <button type="submit">Delete</button>
+                <button class="button" type="submit">Delete</button>
               </div>
           </form>
         </li>
